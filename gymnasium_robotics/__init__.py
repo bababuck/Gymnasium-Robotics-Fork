@@ -18,20 +18,6 @@ def register_robotics_envs():
 
         # Fetch
         register(
-            id=f"FetchSlide{suffix}-v1",
-            entry_point="gymnasium_robotics.envs.fetch.slide:MujocoPyFetchSlideEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
-            id=f"FetchSlide{suffix}-v2",
-            entry_point="gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
             id=f"FetchPickAndPlace{suffix}-v1",
             entry_point="gymnasium_robotics.envs.fetch.pick_and_place:MujocoPyFetchPickAndPlaceEnv",
             kwargs=kwargs,
@@ -41,34 +27,6 @@ def register_robotics_envs():
         register(
             id=f"FetchPickAndPlace{suffix}-v2",
             entry_point="gymnasium_robotics.envs.fetch.pick_and_place:MujocoFetchPickAndPlaceEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
-            id=f"FetchReach{suffix}-v1",
-            entry_point="gymnasium_robotics.envs.fetch.reach:MujocoPyFetchReachEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
-            id=f"FetchReach{suffix}-v2",
-            entry_point="gymnasium_robotics.envs.fetch.reach:MujocoFetchReachEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
-            id=f"FetchPush{suffix}-v1",
-            entry_point="gymnasium_robotics.envs.fetch.push:MujocoPyFetchPushEnv",
-            kwargs=kwargs,
-            max_episode_steps=50,
-        )
-
-        register(
-            id=f"FetchPush{suffix}-v2",
-            entry_point="gymnasium_robotics.envs.fetch.push:MujocoFetchPushEnv",
             kwargs=kwargs,
             max_episode_steps=50,
         )
