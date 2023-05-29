@@ -4,6 +4,8 @@ from gymnasium.utils.ezpickle import EzPickle
 
 from gymnasium_robotics.envs.fetch import MujocoFetchEnv, MujocoPyFetchEnv
 
+import numpy as np
+import time
 MODEL_XML_PATH = os.path.join("fetch", "pick_and_place.xml")
 
 
@@ -154,12 +156,43 @@ class MujocoFetchPickAndPlaceEnv(MujocoFetchEnv, EzPickle):
         EzPickle.__init__(self, reward_type=reward_type, **kwargs)
 
     def get_rope_pos(self, id):
+        id *= 2 # Added more segments for looks but smaller action space
         body_id = self._model_names.geom_name2id[f"CGH{id}"]
         return self.data.geom_xpos[body_id]
 
     def get_gripper_xpos(self):
         body_id = self._model_names.body_name2id["robot0:gripper_link"]
         return self.data.xpos[body_id]
+
+    def get_gripper_width(self):
+        return self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:r_gripper_finger_link"]][1] - self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:l_gripper_finger_link"]][1]
+
+    def fix_gripper_width(self):
+        # Gripper width gets messed up sometimes
+        l_loc, r_loc = self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:l_gripper_finger_link"]][1], self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:r_gripper_finger_link"]][1]
+        g_pos = self.get_gripper_xpos()[1]
+        print([g_pos, l_loc, r_loc])
+        pos_ctrl = [0, 0, 0]
+        rot_ctrl = [
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+        ]  # fixed rotation of the end effector, expressed as a quaternion
+
+        mv_l = l_loc - g_pos + 0.02 - 0.001578004664922741
+        mv_r = r_loc - g_pos + 0.02 - 0.018425818630295125
+        gripper_ctrl = [mv_l, mv_r]
+        print(gripper_ctrl)
+        action = np.concatenate([pos_ctrl, rot_ctrl, gripper_ctrl])
+        # Apply action to simulation.
+        self._utils.ctrl_set_action(self.model, self.data, action)
+        self._utils.mocap_set_action(self.model, self.data, action)
+        self._mujoco_step(action)
+        l_loc, r_loc = self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:l_gripper_finger_link"]][1], self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:r_gripper_finger_link"]][1]
+        g_pos = self.get_gripper_xpos()[1]
+        print([g_pos, l_loc, r_loc])
+        time.sleep(2)
 
 class MujocoPyFetchPickAndPlaceEnv(MujocoPyFetchEnv, EzPickle):
     def __init__(self, reward_type="sparse", **kwargs):
@@ -194,3 +227,6 @@ class MujocoPyFetchPickAndPlaceEnv(MujocoPyFetchEnv, EzPickle):
     def get_gripper_xpos(self):
         body_id = self._model_names.body_name2id["robot0:gripper_link"]
         return self.data.xpos[body_id]
+
+    def get_gripper_width(self):
+        return self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:r_gripper_finger_link"]][1] - self.data.geom_xpos[self._model_names.geom_name2id[f"robot0:l_gripper_finger_link"]][1]

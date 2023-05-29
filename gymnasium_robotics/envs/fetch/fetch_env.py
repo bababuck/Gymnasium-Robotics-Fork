@@ -6,9 +6,9 @@ from gymnasium_robotics.envs.robot_env import MujocoPyRobotEnv, MujocoRobotEnv
 from gymnasium_robotics.utils import rotations
 
 DEFAULT_CAMERA_CONFIG = {
-    "distance": 0.25,
+    "distance": 0.75,
     "azimuth": 145.0,
-    "elevation": -10.0,
+    "elevation": -12.0,
     "lookat": np.array([1.3, 0.75, 0.45]),
 }
 
@@ -101,7 +101,6 @@ def get_base_fetch_env(RobotEnvClass: Union[MujocoPyRobotEnv, MujocoRobotEnv]):
             if self.block_gripper:
                 gripper_ctrl = np.zeros_like(gripper_ctrl)
             action = np.concatenate([pos_ctrl, rot_ctrl, gripper_ctrl])
-
             return action
 
         def _get_obs(self):
