@@ -153,6 +153,13 @@ class MujocoFetchPickAndPlaceEnv(MujocoFetchEnv, EzPickle):
         )
         EzPickle.__init__(self, reward_type=reward_type, **kwargs)
 
+    def get_rope_pos(self, id):
+        body_id = self._model_names.geom_name2id[f"CGH{id}"]
+        return self.data.geom_xpos[body_id]
+
+    def get_gripper_xpos(self):
+        body_id = self._model_names.body_name2id["robot0:gripper_link"]
+        return self.data.xpos[body_id]
 
 class MujocoPyFetchPickAndPlaceEnv(MujocoPyFetchEnv, EzPickle):
     def __init__(self, reward_type="sparse", **kwargs):
@@ -179,3 +186,11 @@ class MujocoPyFetchPickAndPlaceEnv(MujocoPyFetchEnv, EzPickle):
             **kwargs,
         )
         EzPickle.__init__(self, reward_type=reward_type, **kwargs)
+
+    def get_rope_pos(self, id):
+        body_id = self._model_names.geom_name2id[f"CGH{id}"]
+        return self.data.geom_xpos[body_id]
+
+    def get_gripper_xpos(self):
+        body_id = self._model_names.body_name2id["robot0:gripper_link"]
+        return self.data.xpos[body_id]
