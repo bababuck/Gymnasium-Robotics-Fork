@@ -134,13 +134,12 @@ class MujocoFetchPickAndPlaceEnv(MujocoFetchEnv, EzPickle):
         initial_qpos = {
             "robot0:slide0": 0.405,
             "robot0:slide1": 0.48,
-            "robot0:slide2": 0.0,
-            "object0:joint": [1.25, 0.53, 0.4, 1.0, 0.0, 0.0, 0.0],
+            "robot0:slide2": 0.0
         }
         MujocoFetchEnv.__init__(
             self,
             model_path=MODEL_XML_PATH,
-            has_object=True,
+            has_object=False,
             block_gripper=False,
             n_substeps=20,
             gripper_extra_height=0.2,
@@ -199,8 +198,7 @@ class MujocoPyFetchPickAndPlaceEnv(MujocoPyFetchEnv, EzPickle):
         initial_qpos = {
             "robot0:slide0": 0.405,
             "robot0:slide1": 0.48,
-            "robot0:slide2": 0.0,
-            "object0:joint": [1.25, 0.53, 0.4, 1.0, 0.0, 0.0, 0.0],
+            "robot0:slide2": 0.0
         }
         MujocoPyFetchEnv.__init__(
             self,
