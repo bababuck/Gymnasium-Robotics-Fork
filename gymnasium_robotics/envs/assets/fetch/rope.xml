@@ -1,5 +1,5 @@
 <mujoco model="rope">
-<body name="CB0" pos="1.25 .75 0.4025">
+<body name="CB0" pos="1.15 .75 0.4025">
 <joint name="object1:joint" type="free" damping="0.01"></joint>
 <geom name="CGH0" size="0.003 0.008" pos="0 0 .01" type="cylinder" rgba="0 0 1 0"></geom>
 <geom name="CG0" size="0.0035 0.005 0.005" quat="0.707107 0 0.707107 0" type="box" rgba="0.8 0.2 0.1 1"/>
