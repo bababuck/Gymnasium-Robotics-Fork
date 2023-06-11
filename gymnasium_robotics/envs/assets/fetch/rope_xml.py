@@ -5,7 +5,7 @@ cylinder_height = 0.008
 spacing = 0.015
 sq_width = [0.005, 0.005]
 rope_xml.append('<mujoco model="rope">')
-rope_xml.append('<body name="CB0" pos="1.25 .75 0.4025">')
+rope_xml.append('<body name="CB0" pos="1.15 .75 0.4025">')
 rope_xml.append('<joint name="object1:joint" type="free" damping="0.01"></joint>')
 #rope_xml.append('<inertial pos="0 0 0.01" quat="0.707107 0 0.707107 0" mass="0.0001" diaginertia="2.52375e-09 2.52375e-09 6.38791e-09"/>')
 #rope_xml.append(f'<geom name="CGH0" size="0.001 .01" pos="0 0 .01" type="cylinder"></geom>')
